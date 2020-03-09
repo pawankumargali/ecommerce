@@ -1,8 +1,8 @@
 const router = require('express').Router();
-const {userById} = require('../controllers/user');
+const {userById , getUser} = require('../controllers/user');
 const {requireSignIn, isAuth} = require('../controllers/auth');
 
-router.get('/:userId', requireSignIn, isAuth, (req,res) => res.json({user:req.profile}) );
+router.get('/:userId', requireSignIn, isAuth, getUser );
 
 router.param('userId', userById)
 

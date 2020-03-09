@@ -11,6 +11,7 @@ const morgan = require('morgan');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const categoryRouter = require('./routes/category');
+const productRouter = require('./routes/product');
 
 // SERVER & DB SETUP
 const app = express();
@@ -29,4 +30,5 @@ app
 app
 .use('/api/auth', authRouter)
 .use('/api/user', userRouter)
-.use('/api/category', categoryRouter);
+.use('/api/category', categoryRouter)
+.use('/api/product', productRouter);
