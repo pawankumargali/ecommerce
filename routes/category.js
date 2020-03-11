@@ -6,15 +6,21 @@ const { categoryById, getCategory,
 const { userById } = require('../controllers/user');
 const { requireSignIn, isAdmin } = require('../controllers/auth');
 
-router
-.get('/:categoryId', getCategory)
-.post('/create/:userId', requireSignIn, isAdmin, createCategory)
-.put('/:categoryId/:userId', requireSignIn, isAdmin, updateCategory)
-.delete('/:categoryId/:userId', requireSignIn, isAdmin, deleteCategory)
-.get('/', getAllCategories);
+// GET
+router.get('/category/:categoryId', getCategory);
+router.get('/categories', getAllCategories);
 
-router
-.param('userId', userById)
-.param('categoryId', categoryById);
+// POST
+router.post('/category/create/:userId', requireSignIn, isAdmin, createCategory);
+
+// PUT
+router.put('/category/:categoryId/:userId', requireSignIn, isAdmin, updateCategory);
+
+// DELETE
+router.delete('/category/:categoryId/:userId', requireSignIn, isAdmin, deleteCategory);
+
+// ROUTE PARAMS
+router.param('userId', userById);
+router.param('categoryId', categoryById);
 
 module.exports = router;
