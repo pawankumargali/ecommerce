@@ -57,12 +57,11 @@ module.exports.getProduct = function(req, res) {
 
 
 module.exports.getProductImage = function(req, res, next) {
-    const productImg = req.product.image.data;
-    console.log('hello');
-    if(productImg) {
-        res.set('Content-Type', req.product.image.contentType);
-        res.status(200).json(productImg);
-    }
+    const {product} = req;
+    if(!product.image)
+        return res.status(404).json({err:'Image not found'});
+    res.set('Content-Type', product.image.contentType);
+    res.status(200).send(product.image.data); 
     next();
 }
 
@@ -182,9 +181,10 @@ module.exports.getAllProductCategories = async function(req, res) {
 /*
 RETURNS PRODUCT BY SEARCH
 
-Product search is implemented in React Front-end and products are filtered based on category and price range
+Products are filtered based on category and price range
 
-Filters are passed as an object of arrays filters: { price: [min,max], categories=[cat1,cat2,cat3...] }
+Filters are passed in req.body as an object of arrays 
+    req.body.filters: { price: [min,max], categories=[cat1,cat2,cat3...] }
 */
 module.exports.getProductsBySearch = async function(req, res) {
     const sortBy = req.query.sortBy ? req.query.sortBy : '_id';
@@ -194,16 +194,16 @@ module.exports.getProductsBySearch = async function(req, res) {
     try {
          // If no filters are applied return all products
         let products;
-        if(!req.body.filters) {
-            products = await Product.find({})
+        const {price,categories} = req.body.filters;
+        if(categories.length==0) {
+            products = await Product.find({price:{$gte:min, $lte:max}})
                                         .select('-image -sold')
                                         .populate('category','name')
                                         .sort([[sortBy, order]])
                                         .skip(skip)
                                         .limit(limit);
         }
-        else {
-            const {price,categories} = req.body.filters;
+        else {      
             const [min, max] = price;
             products = await Product.find({category:{$in:categories}, price:{$gte:min, $lte:max}})
                                             .select('-image -sold')

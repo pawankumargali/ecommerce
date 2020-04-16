@@ -3,11 +3,10 @@ const {signUpValidator, signInValidator} = require('../validators/auth');
 const {signUp, signIn, signOut, requireSignIn} = require('../controllers/auth');
 
 // GET
-router.get('/signout', requireSignIn, signOut)
+router.get('/auth/signout', requireSignIn, signOut)
 
 // POST
-router.post('/signup', signUpValidator, signUp);
-router.post('/signin', signInValidator, signIn);
+router.post('/auth/signup', signUpValidator, signUp);
+router.post('/auth/signin', signInValidator, signIn);
 
-// ROUTE PARAMS
 module.exports = router;

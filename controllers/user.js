@@ -15,5 +15,18 @@ module.exports.userById = async function(req, res, next, id) {
 }
 
 module.exports.getUser = function(req, res) {
-    res.json({user:req.profile});
+    const user = req.profile;
+    user.password = undefined;
+    res.json(user);
+}
+
+module.exports.updateUser = async function(req, res) {
+    try { 
+        const user = await User.findByIdAndUpdate(req.profile._id, {$set:req.body}, {new:true});
+        user.password=undefined;
+        res.status(201).json({updateSuccess:true,user});
+    }
+    catch(err) {
+        res.status(400).json({err:dbErrorHandler(err)});
+    }
 }

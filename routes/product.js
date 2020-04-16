@@ -22,7 +22,7 @@ router.post('/products/by/search',getProductsBySearch)
 // DELETE
 router.delete('/product/:productId/:userId', requireSignIn, isAdmin, deleteProduct);
 
-// PUT
+// UPDATE
 router.put('/product/:productId/:userId', requireSignIn ,isAdmin, updateProduct);
 
 // ROUTE PARAMS

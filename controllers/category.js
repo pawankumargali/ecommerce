@@ -59,8 +59,8 @@ module.exports.getAllCategories = async function(req, res) {
     try {
         results = await Category.find({});
         let categories = [];
-        results.forEach(category => categories.push(category.name));
-        res.status(200).json({categories:categories});
+        results.forEach(category => categories.push({_id: category._id, name:category.name}));
+        res.status(200).json(categories);
     }
     catch(err) {
         console.log(err);

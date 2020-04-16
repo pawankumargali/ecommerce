@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
 const dbConnect = require('./dbConnect');
+const cors = require('cors');
 const morgan = require('morgan');
 
 // IMPORT ROUTES
@@ -19,16 +20,19 @@ app.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.
 dbConnect();
 
 // APP MIDDLEWARE
-app
-.use(bodyParser.json())
-.use(expressValidator())
-.use(cookieParser())
-.use(morgan('dev'));
-
+app.use(cors());
+app.use(bodyParser.json())
+app.use(expressValidator())
+app.use(cookieParser())
+app.use(morgan('dev'));
 
 // ROUTES MIDDLEWARE
-app
-.use('/api/auth', authRouter)
-.use('/api/user', userRouter)
-.use('/api', categoryRouter)
-.use('/api', productRouter);
+app.use('/api', authRouter)
+app.use('/api', userRouter)
+app.use('/api', categoryRouter)
+app.use('/api', productRouter);
+
+
+app.get('/', (req,res) => {
+    res.redirect('https://github.com/pawankumargali/ecommerce');
+})

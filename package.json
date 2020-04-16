@@ -10,10 +10,14 @@
   "keywords": [],
   "author": "pawankumagali",
   "license": "ISC",
+  "engines": {
+    "node":"12.4.1"
+  },
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^5.3.1",
