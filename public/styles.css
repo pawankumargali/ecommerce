@@ -1,0 +1,16 @@
+.btn, .jumbotron, .nav:hover {
+    border-radius: 0px;
+}
+
+.prod-img {
+    height:340px;
+    width:220px;
+}
+
+
+#product-card {
+    border : solid 1px #98989C;
+    box-shadow: 1px 1px 1px 1px #98989C;
+    /* height:500px; */
+    width:auto;
+}
